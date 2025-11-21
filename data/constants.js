@@ -263,7 +263,7 @@ export const education = [
     degree: "SSC(XII), Science with Computer",
   },
   {
-    id: 1,
+    id: 2,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_2i0D_A0B6pzjBeYsQ84g06FO7Asu1GzhRQ&s",
     school: "Podar International School (ICSE), Pune",
     date: "June 2006 - May 2019",

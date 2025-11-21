@@ -142,7 +142,7 @@ export default function HeroPage() {
           >
             <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-2 border-[var(--border)]/30 backdrop-blur-sm shadow-2xl hover:scale-105 transition-transform duration-500 ease-out">
               <Image
-                src="https://placehold.co/512x512/png"
+                src="/profile.jpg"
                 alt="Vihaan Phal - Full Stack Developer"
                 fill
                 className="object-cover"

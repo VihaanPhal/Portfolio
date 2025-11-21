@@ -18,6 +18,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cobe": "^0.6.5",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "html2canvas": "^1.4.1",
     "lucide-react": "^0.544.0",
     "motion": "^12.23.22",
@@ -25,6 +27,8 @@
     "next-themes": "^0.4.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-intersection-observer": "^10.0.0",
+    "react-parallax-tilt": "^1.7.313",
     "shiki": "^3.12.2",
     "tailwind-merge": "^3.3.1"
   },

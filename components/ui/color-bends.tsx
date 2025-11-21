@@ -1,20 +1,41 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 interface ColorBendsProps {
   className?: string;
+  cursorFollow?: boolean;
 }
 
-export function ColorBends({ className = "" }: ColorBendsProps) {
+export function ColorBends({ className = "", cursorFollow = false }: ColorBendsProps) {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  // Mouse position for cursor-following gradient
+  const mouseX = useMotionValue(50);
+  const mouseY = useMotionValue(50);
+
+  // Smooth spring animation for cursor following
+  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+
   useEffect(() => {
     setMounted(true);
-  }, []);
+
+    if (!cursorFollow) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      mouseX.set(x);
+      mouseY.set(y);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [cursorFollow, mouseX, mouseY]);
 
   // Prevent flash during hydration
   if (!mounted) {
@@ -175,20 +196,27 @@ export function ColorBends({ className = "" }: ColorBendsProps) {
         />
 
         <motion.ellipse
-          cx="50%"
-          cy="50%"
+          cx={cursorFollow ? smoothX : "50%"}
+          cy={cursorFollow ? smoothY : "50%"}
           rx="50%"
           ry="45%"
           fill="url(#colorBend3)"
           filter="url(#blur)"
-          animate={{
-            cx: ["50%", "40%", "60%", "50%"],
-            cy: ["50%", "60%", "40%", "50%"],
-            rx: ["50%", "60%", "40%", "50%"],
-            ry: ["45%", "55%", "35%", "45%"],
-          }}
+          animate={
+            cursorFollow
+              ? {
+                  rx: ["50%", "60%", "50%"],
+                  ry: ["45%", "55%", "45%"],
+                }
+              : {
+                  cx: ["50%", "40%", "60%", "50%"],
+                  cy: ["50%", "60%", "40%", "50%"],
+                  rx: ["50%", "60%", "40%", "50%"],
+                  ry: ["45%", "55%", "35%", "45%"],
+                }
+          }
           transition={{
-            duration: 35,
+            duration: cursorFollow ? 10 : 35,
             repeat: Infinity,
             ease: "easeInOut",
             delay: 0.5,

@@ -3,10 +3,12 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
+      // Placeholder images
       {
         protocol: 'https',
         hostname: 'placehold.co',
       },
+      // GitHub images
       {
         protocol: 'https',
         hostname: 'camo.githubusercontent.com',
@@ -17,27 +19,25 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'github.githubassets.com',
+      },
+      // Google images
+      {
+        protocol: 'https',
         hostname: 'encrypted-tbn0.gstatic.com',
       },
+      {
+        protocol: 'https',
+        hostname: '*.googleapis.com',
+      },
+      // Technology logos
       {
         protocol: 'https',
         hostname: 'nodejs.org',
       },
       {
         protocol: 'https',
-        hostname: 'e7.pngegg.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.googleapis.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '*.cloudinary.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'firebasestorage.googleapis.com',
+        hostname: 'www.postgresql.org',
       },
       {
         protocol: 'https',
@@ -46,6 +46,37 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: '*.w3.org',
+      },
+      // Icon/logo CDNs
+      {
+        protocol: 'https',
+        hostname: 'e7.pngegg.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.vectorlogo.zone',
+      },
+      {
+        protocol: 'https',
+        hostname: 'static-00.iconduck.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'upload.wikimedia.org',
+      },
+      // Design tools
+      {
+        protocol: 'https',
+        hostname: 's3-alpha.figma.com',
+      },
+      // CDNs
+      {
+        protocol: 'https',
+        hostname: '*.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
       },
     ],
   },

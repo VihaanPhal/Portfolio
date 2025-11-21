@@ -2,6 +2,7 @@ import Heropage from "./components/heropage";
 import Skillspage from "./components/skillspage";
 import Educationpage from "./components/educationpage";
 import Experiencepage from "./components/experiencepage";
+import Projectspage from "./components/projectspage";
 import Contactmepage from "./components/contactmepage";
 import Footer from "./components/footer";
 import DockNav from "./components/doc-nav";
@@ -21,6 +22,9 @@ export default function Home() {
         </section>
         <section id="experience">
           <Experiencepage />
+        </section>
+        <section id="projects">
+          <Projectspage />
         </section>
         <section id="contact">
           <Contactmepage />

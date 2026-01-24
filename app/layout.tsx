@@ -1,26 +1,28 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
 import "./globals.css";
-import { Instrument_Serif } from "next/font/google";
-import { Instrument_Sans } from "next/font/google";
+import { Bebas_Neue, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import Header from "./components/header";
+import { ThemeProvider } from "next-themes";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
+  weight: "400",
+  variable: "--font-bebas-neue",
+  display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-ibm-plex-sans",
   display: "swap",
-  variable: "--font-instrument-serif",
-  weight: "400",
 });
-const instrumentSans = Instrument_Sans({
+
+const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-ibm-plex-mono",
   display: "swap",
-  variable: "--font-instrument-sans",
-  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -36,14 +38,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable}`}
       suppressHydrationWarning
     >
       <body
-        className={`${geistSans.variable} ${instrumentSans.variable} antialiased`}
+        className={`${bebasNeue.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} antialiased`}
       >
-        <Header />
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <Header />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

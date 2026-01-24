@@ -49,9 +49,9 @@ export default function Header() {
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur supports-[backdrop-filter]:bg-[color-mix(in_oklab,var(--background)_92%,transparent_8%)] font-serif">
+    <header className="sticky top-0 z-50 w-full border-b border-[var(--border)] bg-[var(--background)]/95 backdrop-blur supports-[backdrop-filter]:bg-[color-mix(in_oklab,var(--background)_92%,transparent_8%)] hero-font">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand — Instrument Sans; random color each hover; shadow cast to right (light source left) */}
+        {/* Brand — Newsreader; random color each hover; shadow cast to right (light source left) */}
         <Link
           href="#home"
           aria-label="Go to home"
@@ -61,16 +61,12 @@ export default function Header() {
           onBlur={() => setBrandIndex(null)}
           onClick={() => setOpen(false)}
           className="select-none"
-          style={{ fontFamily: "var(--font-instrument-sans), ui-sans-serif" }}
         >
           <h1
-            className="
-            font-display
-              text-2xl font-medium tracking-tight
+            className="text-2xl font-medium tracking-tight
               [text-shadow:2px_1px_0_rgba(0,0,0,0.10)]
               dark:[text-shadow:2px_1px_0_rgba(255,255,255,0.18)]
-              transition-colors
-            "
+              transition-colors"
             style={{ color: brandColor }}
           >
             vihaanphal

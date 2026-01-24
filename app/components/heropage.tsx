@@ -1,218 +1,103 @@
-"use client";
+"use client"
 
-import React from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import React from "react"
+import { motion } from "motion/react"
+import { SplitFlapDisplay } from "./hero/split-flap-display"
+import { NoiseCanvas } from "./hero/noise-canvas"
+import { ScrambleButton } from "./hero/scramble-button"
+import { TypewriterRoles } from "./typewriter-roles"
+import { Bio } from "@/data/constants"
 
-// UI Components
-import { ColorBends } from "@/components/ui/color-bends";
-import { HyperText } from "@/components/ui/hyper-text";
-import { MorphingText } from "@/components/ui/morphing-text";
-import { Profile3D } from "./hero/profile-3d";
-
-// Your data
-import { Bio } from "@/data/constants";
-
-export default function HeroPage() {
-  // Scroll-based parallax
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  // Animation variants for staggered entry with depth
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  // Text elements with varying depth
-  const nameVariants = {
-    hidden: { opacity: 0, y: 40, z: -100 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      z: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1] as const,
-      },
-    },
-  };
-
-  const rolesVariants = {
-    hidden: { opacity: 0, y: 30, z: -80 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      z: 0,
-      transition: {
-        duration: 0.7,
-        ease: [0.22, 1, 0.36, 1] as const,
-        delay: 0.2,
-      },
-    },
-  };
-
-  const descVariants = {
-    hidden: { opacity: 0, y: 20, z: -60 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      z: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1] as const,
-        delay: 0.3,
-      },
-    },
-  };
-
-  const buttonsVariants = {
-    hidden: { opacity: 0, y: 15, z: -40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      z: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1] as const,
-        delay: 0.4,
-      },
-    },
-  };
-
+const HeroPage = () => {
   return (
-    <section className="relative min-h-screen bg-background text-foreground overflow-hidden">
-      {/* Animated Color Bends Background with Cursor Follow */}
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[oklch(0.08_0_0)]">
+      {/* Animated Noise Overlay */}
+      <NoiseCanvas opacity={0.03} />
+
+      {/* Vertical Side Label */}
       <motion.div
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{ y, opacity }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 2 }}
+        className="absolute left-6 top-1/2 -translate-y-1/2 hidden md:block z-20"
       >
-        <ColorBends cursorFollow={true} />
+        <span
+          className="font-plex-mono text-[10px] uppercase tracking-[0.3em] text-[oklch(0.55_0_0)] block"
+          style={{
+            writingMode: "vertical-rl",
+            transform: "rotate(180deg)",
+          }}
+        >
+          Signal
+        </span>
       </motion.div>
 
-      {/* Main Content with Perspective */}
-      <div
-        className="container mx-auto min-h-screen flex items-center justify-center px-6 py-20"
-        style={{ perspective: "2000px" }}
-      >
-        <motion.div
-          className="grid max-w-6xl w-full grid-cols-1 lg:grid-cols-2 items-center gap-16"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* LEFT: Text content with 3D depth */}
-          <div className="flex flex-col items-start space-y-8" style={{ transformStyle: "preserve-3d" }}>
-            {/* Name - Deepest layer */}
-            <motion.div variants={nameVariants}>
-              <HyperText
-                className="text-6xl sm:text-7xl md:text-8xl font-black leading-none tracking-tight"
-                animateOnHover={false}
-                startOnView
-              >
-                {Bio?.name ?? "VIHAAN PHAL"}
-              </HyperText>
-            </motion.div>
+      {/* Main Content - Left Aligned */}
+      <div className="relative z-10 w-full pl-6 md:pl-28 pr-6 md:pr-12 py-20">
+        {/* DRAMATIC NAME DISPLAY - Maximum size that fits viewport */}
+        <div className="w-full overflow-hidden">
+          <SplitFlapDisplay
+            text={Bio.name}
+            className="text-[clamp(2.5rem,9.5vw,9rem)] leading-[0.9] tracking-tight whitespace-nowrap"
+          />
+        </div>
 
-            {/* Morphing roles */}
-            <motion.div
-              variants={rolesVariants}
-              className="text-2xl sm:text-3xl font-medium text-muted-foreground"
-            >
-              <MorphingText
-                texts={
-                  Bio?.roles ?? [
-                    "Full Stack Developer",
-                    "iOS Developer",
-                    ".NET Developer",
-                    "Professional Cricketer",
-                  ]
-                }
-                className="font-medium"
-              />
-            </motion.div>
-
-            {/* Description */}
-            <motion.p
-              variants={descVariants}
-              className="text-xl sm:text-2xl text-muted-foreground max-w-2xl leading-relaxed"
-            >
-              I build end-to-end products across web, mobile, and backend
-              platforms.
-            </motion.p>
-
-            {/* Links - Closest layer */}
-            <motion.div
-              variants={buttonsVariants}
-              className="flex flex-wrap items-center gap-4 pt-4"
-            >
-              {Bio?.github && (
-                <a
-                  href={Bio.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group px-8 py-3 bg-[var(--accent)] text-[var(--accent-foreground)] rounded-2xl font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-[var(--accent)]/20"
-                  style={{
-                    background: "color-mix(in oklch, var(--accent) 100%, transparent)",
-                  }}
-                >
-                  GitHub
-                </a>
-              )}
-
-              {Bio?.linkedin && (
-                <a
-                  href={Bio.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group px-8 py-3 border border-[var(--border)] rounded-2xl font-medium backdrop-blur-sm bg-[var(--background)]/50 hover:bg-[var(--accent)]/10 hover:border-[var(--accent)]/50 transition-all duration-200 hover:scale-105"
-                >
-                  LinkedIn
-                </a>
-              )}
-
-              {Bio?.resume && (
-                <a
-                  href={Bio.resume}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group px-8 py-3 border border-[var(--border)] rounded-2xl font-medium backdrop-blur-sm bg-[var(--background)]/50 hover:bg-[var(--accent)]/10 hover:border-[var(--accent)]/50 transition-all duration-200 hover:scale-105"
-                >
-                  Resume ↗
-                </a>
-              )}
-            </motion.div>
-          </div>
-
-          {/* RIGHT: 3D Tilt Profile Photo */}
+        {/* Content below the name - Left Aligned */}
+        <div className="max-w-2xl mt-6">
+          {/* TypewriterRoles - cycling through roles */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, z: -150 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              z: 0,
-              transition: {
-                duration: 1,
-                ease: [0.22, 1, 0.36, 1] as const,
-                delay: 0.5,
-              },
-            }}
-            className="flex justify-center lg:justify-end"
-            style={{ transformStyle: "preserve-3d" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Profile3D
-              src="/profile.jpg"
-              alt="Vihaan Phal - Full Stack Developer"
-            />
+            <TypewriterRoles />
           </motion.div>
-        </motion.div>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 2, ease: [0.22, 1, 0.36, 1] }}
+            className="font-plex-mono text-sm text-[oklch(0.50_0_0)] leading-relaxed max-w-lg mt-8"
+          >
+            {Bio.description}
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 2.2, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-wrap items-center gap-8 mt-12"
+          >
+            <ScrambleButton href="#projects" variant="primary">
+              View Projects
+            </ScrambleButton>
+            <ScrambleButton href={Bio.resume} variant="secondary" external>
+              Resume
+            </ScrambleButton>
+          </motion.div>
+        </div>
       </div>
+
+      {/* Available for Work Tag - Bottom Right */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 2.5 }}
+        className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-20"
+      >
+        <div className="border border-[oklch(0.25_0_0)] px-4 py-2">
+          <span className="font-plex-mono text-[10px] uppercase tracking-[0.2em] text-[oklch(0.55_0_0)]">
+            Available for Work
+          </span>
+        </div>
+      </motion.div>
+
+      {/* Subtle gradient at bottom for section transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[oklch(0.08_0_0)] to-transparent pointer-events-none z-10" />
     </section>
-  );
+  )
 }
+
+export default HeroPage

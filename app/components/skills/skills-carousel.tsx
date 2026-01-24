@@ -8,7 +8,9 @@ import { motion } from "motion/react";
 
 interface Skill {
   name: string;
-  image: string;
+  imageLight: string;
+  imageDark?: string;
+  image?: string;
 }
 
 interface SkillCategory {
@@ -140,11 +142,18 @@ export function SkillsCarousel({ categories }: SkillsCarouselProps) {
                       {/* Skill Icon */}
                       <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
                         <Image
-                          src={skill.image}
+                          src={skill.imageLight ?? skill.image}
                           alt={skill.name}
                           width={56}
                           height={56}
-                          className="object-contain transition-transform duration-300 group-hover:scale-110"
+                          className="object-contain transition-transform duration-300 group-hover:scale-110 dark:hidden"
+                        />
+                        <Image
+                          src={skill.imageDark ?? skill.imageLight ?? skill.image}
+                          alt={skill.name}
+                          width={56}
+                          height={56}
+                          className="hidden object-contain transition-transform duration-300 group-hover:scale-110 dark:block"
                         />
                       </div>
 

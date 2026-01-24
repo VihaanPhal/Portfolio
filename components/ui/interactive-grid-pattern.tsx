@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -37,13 +37,37 @@ export function InteractiveGridPattern({
 }: InteractiveGridPatternProps) {
   const [horizontal, vertical] = squares
   const [hoveredSquare, setHoveredSquare] = useState<number | null>(null)
+  const [isDark, setIsDark] = useState(false)
+
+  // Detect dark mode
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDark(document.documentElement.classList.contains('dark'))
+    }
+
+    checkDarkMode()
+
+    // Watch for theme changes
+    const observer = new MutationObserver(checkDarkMode)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
+  // Get computed primary color
+  const strokeOpacity = isDark ? 0.10 : 0.55
+  const fillOpacity = isDark ? 0.20 : 0.26
 
   return (
     <svg
       width={width * horizontal}
       height={height * vertical}
+      viewBox={`0 0 ${width * horizontal} ${height * vertical}`}
       className={cn(
-        "absolute inset-0 h-full w-full border border-gray-400/30",
+        "absolute inset-0 h-full w-full",
         className
       )}
       {...props}
@@ -58,9 +82,13 @@ export function InteractiveGridPattern({
             y={y}
             width={width}
             height={height}
+            fill={hoveredSquare === index ? `var(--accent)` : "transparent"}
+            fillOpacity={fillOpacity}
+            stroke="var(--accent)"
+            strokeOpacity={strokeOpacity}
+            strokeWidth={1}
             className={cn(
-              "stroke-gray-400/30 transition-all duration-100 ease-in-out [&:not(:hover)]:duration-1000",
-              hoveredSquare === index ? "fill-gray-300/30" : "fill-transparent",
+              "transition-all duration-100 ease-in-out [&:not(:hover)]:duration-1000",
               squaresClassName
             )}
             onMouseEnter={() => setHoveredSquare(index)}

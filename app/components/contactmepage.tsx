@@ -106,7 +106,7 @@ export default function ContactMePage() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight mb-4">
+          <h2 className="hero-font text-5xl sm:text-6xl md:text-7xl font-black tracking-tight mb-4">
             Get in Touch
           </h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef, useCallback } from "react"
+import React, { useRef, useCallback } from "react"
 import { motion, useMotionValue, useTransform } from "motion/react"
 import { ChevronsRight, Check } from "lucide-react"
 
@@ -16,7 +16,6 @@ export const SlideToVerify: React.FC<SlideToVerifyProps> = ({
   className = "",
 }) => {
   const trackRef = useRef<HTMLDivElement>(null)
-  const [isDragging, setIsDragging] = useState(false)
   const x = useMotionValue(0)
 
   const getTrackWidth = useCallback(() => {
@@ -29,7 +28,6 @@ export const SlideToVerify: React.FC<SlideToVerifyProps> = ({
   const fillOpacity = useTransform(x, [0, 200], [0, 1])
 
   const handleDragEnd = () => {
-    setIsDragging(false)
     const max = getTrackWidth()
     if (x.get() >= max * 0.85) {
       // Snap to end and verify
@@ -95,7 +93,6 @@ export const SlideToVerify: React.FC<SlideToVerifyProps> = ({
             dragConstraints={trackRef}
             dragElastic={0}
             dragMomentum={false}
-            onDragStart={() => setIsDragging(true)}
             onDragEnd={handleDragEnd}
           >
             <ChevronsRight className="w-5 h-5 text-[var(--background)]" />

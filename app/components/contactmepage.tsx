@@ -108,7 +108,7 @@ export default function ContactMePage() {
             Get in Touch
           </h2>
           <p className="mt-4 text-[var(--foreground)]/60 max-w-md mx-auto">
-            Have a project in mind or want to collaborate? I'd love to hear from you.
+            Have a project in mind or want to collaborate? I&apos;d love to hear from you.
           </p>
         </motion.div>
 
@@ -128,7 +128,7 @@ export default function ContactMePage() {
             </motion.div>
             <h3 className="font-bebas text-3xl mt-6">Message Sent!</h3>
             <p className="mt-2 text-[var(--foreground)]/60">
-              Thanks for reaching out. I'll get back to you within 24 hours.
+              Thanks for reaching out. I&apos;ll get back to you within 24 hours.
             </p>
             <button
               onClick={() => setStatus("idle")}

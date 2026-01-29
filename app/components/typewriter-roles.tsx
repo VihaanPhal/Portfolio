@@ -4,7 +4,17 @@ import { useState, useEffect } from "react"
 import { motion } from "motion/react"
 import { Bio } from "@/data/constants"
 
-export const TypewriterRoles = () => {
+interface TypewriterRolesProps {
+  className?: string
+  withLine?: boolean
+  lineClassName?: string
+}
+
+export const TypewriterRoles = ({
+  className = "",
+  withLine = false,
+  lineClassName = "w-12",
+}: TypewriterRolesProps) => {
   const roles = Bio.roles
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0)
   const [displayedText, setDisplayedText] = useState("")
@@ -20,7 +30,7 @@ export const TypewriterRoles = () => {
       const pauseTimeout = setTimeout(() => {
         setIsPaused(false)
         setIsDeleting(true)
-      }, 2000) // Hold for 2 seconds
+      }, 2000)
       return () => clearTimeout(pauseTimeout)
     }
 
@@ -48,21 +58,24 @@ export const TypewriterRoles = () => {
   }, [currentRoleIndex, displayedText, isDeleting, isPaused, roles])
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      className="flex items-center gap-2 text-2xl"
-    >
-      <span className="text-muted-foreground font-normal">I am a</span>
-      <span className="font-medium bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-        {displayedText}
+    <div className={`flex items-center gap-3 ${className}`}>
+      {withLine && (
+        <span
+          className={`h-px bg-text-tertiary ${lineClassName}`}
+          aria-hidden
+        />
+      )}
+      <span className="font-plex-mono text-muted-foreground">
+        I am a{" "}
+        <span className="text-primary font-medium">
+          {displayedText}
+        </span>
         <motion.span
-          animate={{ opacity: [1, 1, 0.2, 0.2] }}
+          animate={{ opacity: [1, 1, 0, 0] }}
           transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-          className="inline-block w-[3px] h-[1.2em] bg-primary ml-1 align-text-bottom translate-y-[-0.1em]"
+          className="inline-block w-[2px] h-[1em] bg-primary ml-0.5 align-text-bottom"
         />
       </span>
-    </motion.div>
+    </div>
   )
 }

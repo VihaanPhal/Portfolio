@@ -46,7 +46,7 @@ export function InfiniteScrollColumn({
         {duplicatedSkills.map((skill, index) => (
           <motion.div
             key={`${skill.name}-${index}`}
-            className="flex flex-col items-center justify-center gap-3 p-6 rounded-2xl border border-[var(--border)]/30 bg-[var(--card)]/30 backdrop-blur-sm"
+            className="flex flex-col items-center justify-center gap-3 p-6 rounded-2xl border border-border/30 bg-card/30 backdrop-blur-sm"
             style={{
               opacity: opacity,
               minWidth: "120px",

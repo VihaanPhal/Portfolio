@@ -47,16 +47,16 @@ export function ColorBends({ className = "", cursorFollow = false }: ColorBendsP
   // Color palette - subtle colors that work with black/white theme
   const colors = {
     light: {
-      primary: "oklch(0.9 0.05 280)", // Very light purple
-      secondary: "oklch(0.95 0.03 240)", // Very light blue
-      tertiary: "oklch(0.92 0.04 260)", // Very light indigo
-      background: "oklch(1 0 0)", // Pure white
+      primary: "hsl(280 20% 90%)", // Very light purple
+      secondary: "hsl(240 15% 95%)", // Very light blue
+      tertiary: "hsl(260 18% 92%)", // Very light indigo
+      background: "hsl(0 0% 100%)", // Pure white
     },
     dark: {
-      primary: "oklch(0.3 0.08 280)", // Dark purple
-      secondary: "oklch(0.25 0.06 240)", // Dark blue
-      tertiary: "oklch(0.28 0.07 260)", // Dark indigo
-      background: "oklch(0.15 0 0)", // Near black
+      primary: "hsl(280 35% 25%)", // Dark purple
+      secondary: "hsl(240 30% 20%)", // Dark blue
+      tertiary: "hsl(260 32% 23%)", // Dark indigo
+      background: "hsl(0 0% 10%)", // Near black
     },
   };
 
@@ -229,8 +229,8 @@ export function ColorBends({ className = "", cursorFollow = false }: ColorBendsP
         className="absolute inset-0 pointer-events-none"
         style={{
           background: isDark
-            ? "radial-gradient(ellipse at center, transparent 0%, oklch(0.15 0 0) 100%)"
-            : "radial-gradient(ellipse at center, transparent 0%, oklch(1 0 0) 100%)",
+            ? "radial-gradient(ellipse at center, transparent 0%, hsl(0 0% 10%) 100%)"
+            : "radial-gradient(ellipse at center, transparent 0%, hsl(0 0% 100%) 100%)",
         }}
       />
     </div>

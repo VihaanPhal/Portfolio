@@ -72,16 +72,16 @@ export const ScrambleButton: React.FC<ScrambleButtonProps> = ({
 
   const variantStyles = {
     primary: `
-      border border-[oklch(0.95_0_0)/20]
-      text-[oklch(0.95_0_0)]
-      hover:border-[oklch(0.7_0.2_45)]
-      hover:text-[oklch(0.7_0.2_45)]
+      border border-foreground/20
+      text-foreground
+      hover:border-primary
+      hover:text-primary
       bg-transparent
     `,
     secondary: `
       border-none
-      text-[oklch(0.55_0_0)]
-      hover:text-[oklch(0.95_0_0)]
+      text-muted-foreground
+      hover:text-foreground
       bg-transparent
     `,
   }

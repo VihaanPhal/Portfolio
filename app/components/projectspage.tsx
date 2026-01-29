@@ -1,156 +1,281 @@
-"use client";
+"use client"
 
-import React from "react";
-import Image from "next/image";
-import { motion } from "motion/react";
-import { projects } from "@/data/constants";
+import React, { useState, useMemo } from "react"
+import { motion, AnimatePresence } from "motion/react"
+import { projects } from "@/data/constants"
+import {
+  FeaturedCard,
+  ProjectCard,
+  CategoryFilter,
+  ArchiveStats,
+  getProjectCategories,
+  getProjectCounts,
+  calculateArchiveStats,
+} from "./projects"
+import type { ProjectCategory } from "./projects"
+
+// Hand-drawn squiggly arrow SVG (reused from hero)
+const SquigglyArrow = () => (
+  <svg
+    width="50"
+    height="20"
+    viewBox="0 0 50 20"
+    fill="none"
+    className="text-primary"
+  >
+    <path
+      d="M2 10 C7 6, 11 14, 16 10 C21 6, 25 14, 30 10 C35 6, 39 12, 44 10"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      fill="none"
+    />
+    <path
+      d="M40 5 L46 10 L40 15"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+  </svg>
+)
 
 export default function ProjectsPage() {
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
+  const [activeCategory, setActiveCategory] = useState<ProjectCategory>("all")
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1] as const,
-      },
-    },
-  };
+  // Get categories and counts
+  const categories = useMemo(
+    () => getProjectCategories(projects),
+    []
+  )
+
+  const projectCounts = useMemo(
+    () => getProjectCounts(projects),
+    []
+  )
+
+  // Filter projects based on active category
+  const filteredProjects = useMemo(() => {
+    if (activeCategory === "all") return projects
+    return projects.filter(
+      (p) => p.category.toLowerCase() === activeCategory.toLowerCase()
+    )
+  }, [activeCategory])
+
+  // Featured project is the first one (most recent)
+  const featuredProject = filteredProjects[0]
+  const remainingProjects = filteredProjects.slice(1)
+
+  // Calculate archive stats
+  const archiveStats = useMemo(() => calculateArchiveStats(projects), [])
 
   return (
-    <section className="relative min-h-screen bg-background text-foreground py-20 px-6">
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-16"
-        >
-          <h2 className="hero-font text-5xl sm:text-6xl md:text-7xl font-black tracking-tight mb-4">
+    <section
+      id="projects"
+      className="relative min-h-screen bg-background text-foreground overflow-hidden py-20 md:py-28"
+    >
+      {/* Section Number Tag - Top Right */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="absolute top-6 right-6 md:top-10 md:right-10 z-20"
+      >
+        <div className="flex flex-col items-end gap-1">
+          <span className="font-plex-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+            Section
+          </span>
+          <span className="font-bebas text-lg md:text-xl text-foreground tracking-wide">
+            05
+          </span>
+          <div className="w-6 h-px bg-primary mt-1" />
+          <span className="font-plex-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary mt-1">
             Projects
-          </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            A showcase of my work and personal projects
-          </p>
-        </motion.div>
+          </span>
+        </div>
+      </motion.div>
 
-        {/* Projects Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {projects.map((project) => (
-            <motion.div key={project.id} variants={cardVariants} whileHover={{ y: -8 }} className="group">
-              <div className="relative h-full rounded-3xl border border-[var(--border)]/70 bg-[var(--card)]/50 backdrop-blur-sm hover:border-[var(--accent)]/50 hover:bg-[var(--card)] hover:shadow-xl hover:shadow-[var(--accent)]/10 transition-all duration-300 overflow-hidden flex flex-col">
-                {/* Project Image */}
-                {project.image && (
-                  <div className="relative w-full h-48 bg-gradient-to-br from-[var(--accent)]/20 to-[var(--accent)]/5 overflow-hidden">
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                )}
+      {/* Archive Label - Top Left */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+        className="absolute top-6 left-6 md:top-10 md:left-10 z-20 hidden md:block"
+      >
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1">
+            <div className="w-1 h-3 bg-primary" />
+            <div className="w-1 h-3 bg-primary/60" />
+            <div className="w-1 h-3 bg-primary/30" />
+          </div>
+          <span className="font-plex-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+            Project Archives // {filteredProjects.length} Entries
+          </span>
+        </div>
+      </motion.div>
 
-                {/* If no image, show gradient placeholder */}
-                {!project.image && (
-                  <div className="relative w-full h-48 bg-gradient-to-br from-[var(--accent)]/20 via-[var(--accent)]/10 to-transparent flex items-center justify-center">
-                    <div className="text-6xl font-black text-[var(--accent)]/30">
-                      {project.title.charAt(0)}
-                    </div>
-                  </div>
-                )}
+      {/* Main Content */}
+      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="font-bebas text-[clamp(4rem,18vw,14rem)] leading-[0.85] tracking-tight text-center md:text-left"
+          >
+            Projects
+          </motion.h2>
 
-                {/* Content */}
-                <div className="flex-1 flex flex-col p-6 space-y-4">
-                  {/* Date */}
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                    <span>{project.date}</span>
-                  </div>
+          {/* Subtitle with squiggly arrow */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center justify-center md:justify-start gap-3 mt-4 md:mt-6"
+          >
+            <SquigglyArrow />
+            <span className="font-plex-mono text-sm md:text-base text-muted-foreground">
+              Digital{" "}
+              <span className="text-primary">artifacts</span> &
+              experiments
+            </span>
+          </motion.div>
 
-                  {/* Title */}
-                  <h3 className="text-xl sm:text-2xl font-bold tracking-tight group-hover:text-[var(--accent)] transition-colors duration-300">
-                    {project.title}
-                  </h3>
+          {/* Category Filter */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-10 md:mt-14"
+          >
+            <CategoryFilter
+              categories={categories}
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+              projectCounts={projectCounts}
+            />
+          </motion.div>
 
-                  {/* Description */}
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed line-clamp-3 flex-1">
-                    {project.description}
-                  </p>
-
-                  {/* Tech Stack Tags */}
-                  {project.tags && project.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.slice(0, 4).map((tag, index) => (
-                        <span
-                          key={index}
-                          className="px-2.5 py-1 text-xs font-medium rounded-full border border-[var(--border)] bg-[var(--background)]/50 hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/10 transition-colors duration-200"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                      {project.tags.length > 4 && (
-                        <span className="px-2.5 py-1 text-xs font-medium rounded-full border border-[var(--border)] bg-[var(--background)]/50">
-                          +{project.tags.length - 4}
-                        </span>
+          {/* Bento Grid Layout */}
+          <div className="mt-10 md:mt-14">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeCategory}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+              >
+                {filteredProjects.length > 0 ? (
+                  <>
+                    {/* Featured + Secondary Row */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+                      {/* Featured Project - Large Card */}
+                      {featuredProject && (
+                        <div className="lg:row-span-2 min-h-[400px] md:min-h-[500px]">
+                          <FeaturedCard
+                            title={featuredProject.title}
+                            description={featuredProject.description}
+                            image={featuredProject.image}
+                            category={featuredProject.category}
+                            date={featuredProject.date}
+                            tags={featuredProject.tags || []}
+                            github={featuredProject.github}
+                            webapp={featuredProject.webapp}
+                          />
+                        </div>
                       )}
+
+                      {/* Secondary Projects - Stacked */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 md:gap-6">
+                        {remainingProjects.slice(0, 2).map((project, index) => (
+                          <ProjectCard
+                            key={project.id}
+                            title={project.title}
+                            description={project.description}
+                            image={project.image}
+                            category={project.category}
+                            date={project.date}
+                            tags={project.tags || []}
+                            github={project.github}
+                            webapp={project.webapp}
+                            index={index + 1}
+                          />
+                        ))}
+                      </div>
                     </div>
-                  )}
 
-                  {/* Links */}
-                  <div className="flex items-center gap-3 pt-2">
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 text-sm font-medium text-[var(--accent)] hover:text-[var(--accent)]/80 transition-colors duration-200"
-                      >
-                        GitHub
-                        <span className="text-base">↗</span>
-                      </a>
+                    {/* Remaining Projects Grid */}
+                    {remainingProjects.length > 2 && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                        {remainingProjects.slice(2).map((project, index) => (
+                          <ProjectCard
+                            key={project.id}
+                            title={project.title}
+                            description={project.description}
+                            image={project.image}
+                            category={project.category}
+                            date={project.date}
+                            tags={project.tags || []}
+                            github={project.github}
+                            webapp={project.webapp}
+                            index={index + 3}
+                          />
+                        ))}
+                      </div>
                     )}
-                    {project.webapp && project.webapp !== project.github && (
-                      <a
-                        href={project.webapp}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2 text-sm font-medium text-[var(--accent)] hover:text-[var(--accent)]/80 transition-colors duration-200"
-                      >
-                        Live Demo
-                        <span className="text-base">↗</span>
-                      </a>
-                    )}
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  /* Empty State */
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="flex flex-col items-center justify-center py-20 text-center"
+                  >
+                    <div className="w-16 h-16 mb-4 border border-dashed border-border flex items-center justify-center">
+                      <span className="font-bebas text-2xl text-text-tertiary">?</span>
+                    </div>
+                    <p className="font-plex-mono text-sm text-muted-foreground">
+                      No projects found in this category
+                    </p>
+                  </motion.div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-                {/* Accent Border on Hover */}
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-[var(--accent)]/20 rounded-3xl transition-all duration-300 pointer-events-none" />
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+          {/* Archive Stats */}
+          <ArchiveStats stats={archiveStats} className="mt-16 md:mt-24" />
+
+          {/* Bottom accent line */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="h-px bg-gradient-to-r from-primary via-border to-transparent mt-8 origin-left"
+          />
+        </div>
       </div>
+
+      {/* Fade gradient at top */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-10" />
+
+      {/* Dot matrix pattern overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.02]"
+        style={{
+          backgroundImage: `radial-gradient(hsl(var(--foreground)) 1px, transparent 1px)`,
+          backgroundSize: "24px 24px",
+        }}
+      />
     </section>
-  );
+  )
 }

@@ -9,12 +9,18 @@ interface SplitFlapCharacterProps {
   targetChar: string
   delay: number
   isFlipping: boolean
+  outline?: boolean
+  highlight?: boolean
+  highlightActive?: boolean
 }
 
 const SplitFlapCharacter: React.FC<SplitFlapCharacterProps> = ({
   targetChar,
   delay,
   isFlipping,
+  outline = false,
+  highlight = false,
+  highlightActive = false,
 }) => {
   const [currentChar, setCurrentChar] = useState(" ")
   const [isAnimating, setIsAnimating] = useState(false)
@@ -64,7 +70,7 @@ const SplitFlapCharacter: React.FC<SplitFlapCharacterProps> = ({
   if (targetChar === " ") {
     return (
       <motion.div
-        className="inline-block w-[0.3em]"
+        className="inline-block w-[0.25em]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
@@ -72,33 +78,40 @@ const SplitFlapCharacter: React.FC<SplitFlapCharacterProps> = ({
     )
   }
 
+  // Style for highlight, outline, or filled
+  let letterStyle: React.CSSProperties
+
+  if (highlight) {
+    // Highlight mode: filled text that becomes white when highlight is active
+    letterStyle = {
+      color: highlightActive ? "var(--primary-foreground)" : "var(--foreground)",
+      transition: "color 0.4s ease-out",
+    }
+  } else if (outline) {
+    letterStyle = {
+      color: "transparent",
+      WebkitTextStroke: "2px var(--foreground)",
+      WebkitTextStrokeColor: isAnimating ? "var(--primary)" : "var(--foreground)",
+    }
+  } else {
+    letterStyle = {
+      color: isAnimating ? "var(--primary)" : "var(--foreground)",
+    }
+  }
+
   return (
     <motion.div
       className="relative inline-flex items-center justify-center"
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: delay / 1000, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div
-        className={`
-          relative flex items-center justify-center
-          min-w-[0.65em] h-[1.15em]
-          bg-[oklch(0.10_0_0)]
-          ${isAnimating ? "text-[oklch(0.7_0.2_45)]" : "text-[oklch(0.95_0_0)]"}
-          transition-colors duration-100
-        `}
+      <span
+        className="relative font-bebas leading-[0.85] transition-colors duration-100"
+        style={letterStyle}
       >
-        {/* Horizontal split line */}
-        <div className="absolute left-0 right-0 top-1/2 h-[2px] bg-[oklch(0.06_0_0)] z-10" />
-
-        {/* Character */}
-        <span className="relative z-0 font-bebas leading-none">
-          {currentChar}
-        </span>
-
-        {/* Subtle border */}
-        <div className="absolute inset-0 border border-[oklch(0.20_0_0)]" />
-      </div>
+        {currentChar}
+      </span>
     </motion.div>
   )
 }
@@ -107,20 +120,29 @@ interface SplitFlapDisplayProps {
   text: string
   className?: string
   onHoverReplay?: boolean
+  outline?: boolean
+  highlight?: boolean
 }
 
 export const SplitFlapDisplay: React.FC<SplitFlapDisplayProps> = ({
   text,
   className = "",
   onHoverReplay = true,
+  outline = false,
+  highlight = false,
 }) => {
   const [isFlipping, setIsFlipping] = useState(false)
   const [key, setKey] = useState(0)
+  const [highlightActive, setHighlightActive] = useState(false)
   const isAnimatingRef = useRef(false)
   const cooldownRef = useRef<NodeJS.Timeout | null>(null)
+  const highlightTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   // Start animation on mount
   useEffect(() => {
+    // Reset highlight when key changes (for hover replay)
+    setHighlightActive(false)
+
     const timer = setTimeout(() => {
       setIsFlipping(true)
       isAnimatingRef.current = true
@@ -130,18 +152,27 @@ export const SplitFlapDisplay: React.FC<SplitFlapDisplayProps> = ({
       cooldownRef.current = setTimeout(() => {
         isAnimatingRef.current = false
       }, totalDuration)
+
+      // Trigger highlight animation after scramble completes + delay for premium feel
+      if (highlight) {
+        highlightTimeoutRef.current = setTimeout(() => {
+          setHighlightActive(true)
+        }, totalDuration + 300) // 300ms after scramble ends for premium feel
+      }
     }, 100)
 
     return () => {
       clearTimeout(timer)
       if (cooldownRef.current) clearTimeout(cooldownRef.current)
+      if (highlightTimeoutRef.current) clearTimeout(highlightTimeoutRef.current)
     }
-  }, [key, text.length])
+  }, [key, text.length, highlight])
 
   const handleMouseEnter = () => {
     if (onHoverReplay && !isAnimatingRef.current) {
       isAnimatingRef.current = true
       setIsFlipping(false)
+      setHighlightActive(false)
 
       // Small delay before restarting to ensure clean reset
       setTimeout(() => {
@@ -155,17 +186,45 @@ export const SplitFlapDisplay: React.FC<SplitFlapDisplayProps> = ({
   return (
     <div
       key={key}
-      className={`inline-flex flex-wrap cursor-pointer ${className}`}
+      className={`relative inline-flex flex-wrap cursor-pointer ${className}`}
       onMouseEnter={handleMouseEnter}
     >
-      {characters.map((char, index) => (
-        <SplitFlapCharacter
-          key={`${key}-${index}`}
-          targetChar={char}
-          delay={index * 100}
-          isFlipping={isFlipping}
+      {/* Animated highlight background */}
+      {highlight && (
+        <motion.div
+          className="absolute bg-primary"
+          initial={{ clipPath: "inset(0 100% 0 0)" }}
+          animate={{
+            clipPath: highlightActive ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)"
+          }}
+          transition={{
+            duration: 0.6,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          style={{
+            // Add padding around the text
+            top: "-0.1em",
+            bottom: "-0.1em",
+            left: "0",
+            right: "-0.3em",
+          }}
         />
-      ))}
+      )}
+
+      {/* Characters */}
+      <div className="relative z-10 flex">
+        {characters.map((char, index) => (
+          <SplitFlapCharacter
+            key={`${key}-${index}`}
+            targetChar={char}
+            delay={index * 100}
+            isFlipping={isFlipping}
+            outline={outline}
+            highlight={highlight}
+            highlightActive={highlightActive}
+          />
+        ))}
+      </div>
     </div>
   )
 }

@@ -72,6 +72,11 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 's3-alpha.figma.com',
       },
+      // LinkedIn images
+      {
+        protocol: 'https',
+        hostname: 'media.licdn.com',
+      },
       // CDNs
       {
         protocol: 'https',

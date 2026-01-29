@@ -1,126 +1,207 @@
-"use client";
+"use client"
 
-import React, { useMemo, useState, useEffect } from "react";
-import { motion } from "motion/react";
-import { useTheme } from "next-themes";
-import Image from "next/image";
-import { skills } from "@/data/constants";
+import React, { useMemo, useState, useEffect } from "react"
+import { motion } from "motion/react"
+import { useTheme } from "next-themes"
+import Image from "next/image"
+import { skills } from "@/data/constants"
+
+// Hand-drawn squiggly arrow SVG (reused from hero)
+const SquigglyArrow = () => (
+  <svg
+    width="50"
+    height="20"
+    viewBox="0 0 50 20"
+    fill="none"
+    className="text-primary"
+  >
+    <path
+      d="M2 10 C7 6, 11 14, 16 10 C21 6, 25 14, 30 10 C35 6, 39 12, 44 10"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      fill="none"
+    />
+    <path
+      d="M40 5 L46 10 L40 15"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+    />
+  </svg>
+)
+
+type CategoryName = "All" | string
 
 export default function SkillsPage() {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  const [activeCategory, setActiveCategory] = useState<CategoryName>("All")
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
-  // Flatten all skills from categories into a single array
-  const allSkills = useMemo(() => {
-    return skills.flatMap((category) => category.skills);
-  }, []);
+  // Get all category names
+  const categories = useMemo(() => {
+    return ["All", ...skills.map((cat) => cat.title)]
+  }, [])
 
-  // Repeat skills to fill a larger grid (6 rows x 8 columns = 48 cells)
-  const repeatedSkills = useMemo(() => {
-    const totalCells = 48;
-    const repeated = [];
-    for (let i = 0; i < totalCells; i++) {
-      repeated.push(allSkills[i % allSkills.length]);
+  // Filter skills based on active category
+  const filteredSkills = useMemo(() => {
+    if (activeCategory === "All") {
+      return skills.flatMap((category) => category.skills)
     }
-    return repeated;
-  }, [allSkills]);
+    const category = skills.find((cat) => cat.title === activeCategory)
+    return category?.skills || []
+  }, [activeCategory])
 
   return (
-    <section className="relative min-h-screen bg-background text-foreground overflow-hidden">
-      {/* Static Grid Background */}
-      <div className="absolute inset-0 flex items-center justify-center px-6 py-20 pointer-events-none overflow-hidden">
-        <div className="grid grid-cols-8 gap-4 max-w-[1400px] w-full">
-          {repeatedSkills.map((skill, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{
-                duration: 0.5,
-                delay: (index % 8) * 0.05,
-                ease: [0.22, 1, 0.36, 1]
-              }}
-              className="flex flex-col items-center justify-center gap-3 p-4 rounded-2xl border border-[var(--border)]/30 bg-[var(--card)]/40 backdrop-blur-sm dark:opacity-40 dark:border-[var(--border)]/20 dark:bg-[var(--card)]/20"
-            >
-              <div className="relative w-10 h-10">
-                <Image
-                  src={
-                    mounted
-                      ? (resolvedTheme === "dark" ? skill.imageDark : skill.imageLight) || skill.imageLight
-                      : skill.imageLight
-                  }
-                  alt={skill.name}
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                  loading="lazy"
-                />
-              </div>
-              <span className="text-xs font-medium text-center text-foreground/80 dark:text-foreground/60">
-                {skill.name}
-              </span>
-            </motion.div>
-          ))}
+    <section
+      id="skills"
+      className="relative min-h-screen bg-background text-foreground overflow-hidden py-20 md:py-28"
+    >
+      {/* Section Number Tag - Top Right */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="absolute top-6 right-6 md:top-10 md:right-10 z-20"
+      >
+        <div className="flex flex-col items-end gap-1">
+          <span className="font-plex-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+            Section
+          </span>
+          <span className="font-bebas text-lg md:text-xl text-foreground tracking-wide">
+            02
+          </span>
+          <div className="w-6 h-px bg-primary mt-1" />
+          <span className="font-plex-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary mt-1">
+            Skills
+          </span>
         </div>
-      </div>
+      </motion.div>
 
-      {/* Circular Translucent Overlay Behind Text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-5">
-        <div
-          className="w-[800px] h-[800px] rounded-full"
-          style={{
-            background: "radial-gradient(circle, rgba(var(--background-rgb), 0.95) 0%, rgba(var(--background-rgb), 0.7) 30%, rgba(var(--background-rgb), 0.3) 60%, transparent 100%)",
-          }}
-        />
-      </div>
-
-      {/* Centered Dramatic Text Overlay */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center px-6">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
-          className="text-center max-w-5xl"
-        >
-          {/* Main dramatic text with bottom-to-top gradient (black to grey) */}
+      {/* Main Content */}
+      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20">
+        {/* Header */}
+        <div className="max-w-7xl mx-auto">
+          {/* Main Heading - Centered on mobile, left on desktop */}
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
-            className="hero-font text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight leading-none mb-6"
-            style={{
-              background: "linear-gradient(to top, var(--foreground) 0%, var(--muted-foreground) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="font-bebas text-[clamp(4rem,18vw,14rem)] leading-[0.85] tracking-tight text-center md:text-left"
           >
             Skills
           </motion.h2>
 
-          {/* Subtitle with glass morphism */}
-          <motion.p
+          {/* Subtitle with squiggly arrow */}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] as const }}
-            className="hero-font text-2xl sm:text-3xl md:text-4xl font-medium text-muted-foreground leading-relaxed px-8 py-6 rounded-3xl backdrop-blur-md bg-[var(--background)]/80 border border-[var(--border)]/30"
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center justify-center md:justify-start gap-3 mt-4 md:mt-6"
           >
-            I have attained over time
-          </motion.p>
-        </motion.div>
+            <SquigglyArrow />
+            <span className="font-plex-mono text-sm md:text-base text-muted-foreground">
+              Technologies I have{" "}
+              <span className="text-primary">mastered</span>
+            </span>
+          </motion.div>
+
+          {/* Category Filter Tabs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-wrap justify-center md:justify-start gap-2 md:gap-4 mt-10 md:mt-14"
+          >
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`
+                  font-plex-mono text-[10px] md:text-xs uppercase tracking-[0.15em]
+                  px-4 py-2 border transition-all duration-300
+                  ${
+                    activeCategory === category
+                      ? "border-primary text-primary bg-primary/10"
+                      : "border-border text-muted-foreground hover:border-border/50 hover:text-foreground"
+                  }
+                `}
+              >
+                {category}
+              </button>
+            ))}
+          </motion.div>
+
+          {/* Skills Grid */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 md:gap-4 mt-10 md:mt-14"
+          >
+            {filteredSkills.map((skill, index) => (
+              <motion.div
+                key={`${activeCategory}-${skill.name}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.03,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                whileHover={{ scale: 1.03, y: -2 }}
+                className="group flex flex-col items-center justify-center gap-3 p-4 md:p-6
+                           bg-card border border-border
+                           hover:border-primary/50 hover:bg-background-elevated
+                           transition-all duration-300 cursor-default"
+              >
+                <div className="relative w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 group-hover:scale-110">
+                  <Image
+                    src={
+                      mounted
+                        ? resolvedTheme === "dark"
+                          ? skill.imageDark || skill.imageLight
+                          : skill.imageLight
+                        : skill.imageLight
+                    }
+                    alt={skill.name}
+                    width={40}
+                    height={40}
+                    className="object-contain"
+                    loading="lazy"
+                  />
+                </div>
+                <span className="font-plex-mono text-[10px] md:text-xs text-center text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                  {skill.name}
+                </span>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Bottom accent line */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="h-px bg-gradient-to-r from-primary via-border to-transparent mt-16 md:mt-20 origin-left"
+          />
+        </div>
       </div>
 
-      {/* Fade gradient at top and bottom for seamless effect */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[var(--background)] to-transparent pointer-events-none z-20" />
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--background)] to-transparent pointer-events-none z-20" />
+      {/* Fade gradient at top */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent pointer-events-none z-10" />
     </section>
-  );
+  )
 }

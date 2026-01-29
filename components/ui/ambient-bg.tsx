@@ -52,7 +52,7 @@ export function AmbientBg() {
       </div>
 
       {/* Soft vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_60%,oklch(0.145_0_0)_100%)] dark:bg-[radial-gradient(ellipse_at_center,transparent_50%,oklch(0.145_0_0)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_60%,hsl(var(--background))_100%)] dark:bg-[radial-gradient(ellipse_at_center,transparent_50%,hsl(var(--background))_100%)]" />
     </div>
   );
 }

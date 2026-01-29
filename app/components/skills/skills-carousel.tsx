@@ -138,7 +138,7 @@ export function SkillsCarousel({ categories }: SkillsCarouselProps) {
                     }}
                     className="group relative"
                   >
-                    <div className="flex flex-col items-center justify-center gap-3 p-6 rounded-2xl border border-[var(--border)]/70 bg-[var(--card)]/50 backdrop-blur-sm hover:border-[var(--accent)]/50 hover:bg-[var(--card)] hover:shadow-lg hover:shadow-[var(--accent)]/10 transition-all duration-300">
+                    <div className="flex flex-col items-center justify-center gap-3 p-6 rounded-2xl border border-border/70 bg-card/50 backdrop-blur-sm hover:border-primary/50 hover:bg-card hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
                       {/* Skill Icon */}
                       <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
                         <Image
@@ -176,10 +176,10 @@ export function SkillsCarousel({ categories }: SkillsCarouselProps) {
         <button
           onClick={scrollPrev}
           aria-label="Previous category"
-          className="group p-3 rounded-full border border-[var(--border)] bg-[var(--background)]/50 backdrop-blur-sm hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/10 transition-all duration-200"
+          className="group p-3 rounded-full border border-border bg-background/50 backdrop-blur-sm hover:border-primary/50 hover:bg-primary/10 transition-all duration-200"
         >
           <svg
-            className="w-5 h-5 text-foreground/70 group-hover:text-[var(--accent)] transition-colors"
+            className="w-5 h-5 text-foreground/70 group-hover:text-primary transition-colors"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -206,8 +206,8 @@ export function SkillsCarousel({ categories }: SkillsCarouselProps) {
               <div
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                   index === selectedIndex
-                    ? "bg-[var(--accent)] scale-125"
-                    : "bg-[var(--border)] group-hover:bg-[var(--accent)]/50"
+                    ? "bg-primary scale-125"
+                    : "bg-border group-hover:bg-primary/50"
                 }`}
               />
 
@@ -221,7 +221,7 @@ export function SkillsCarousel({ categories }: SkillsCarouselProps) {
                     cx="12"
                     cy="12"
                     r="10"
-                    stroke="var(--accent)"
+                    stroke="hsl(var(--primary))"
                     strokeWidth="2"
                     fill="none"
                     strokeLinecap="round"
@@ -243,10 +243,10 @@ export function SkillsCarousel({ categories }: SkillsCarouselProps) {
         <button
           onClick={scrollNext}
           aria-label="Next category"
-          className="group p-3 rounded-full border border-[var(--border)] bg-[var(--background)]/50 backdrop-blur-sm hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/10 transition-all duration-200"
+          className="group p-3 rounded-full border border-border bg-background/50 backdrop-blur-sm hover:border-primary/50 hover:bg-primary/10 transition-all duration-200"
         >
           <svg
-            className="w-5 h-5 text-foreground/70 group-hover:text-[var(--accent)] transition-colors"
+            className="w-5 h-5 text-foreground/70 group-hover:text-primary transition-colors"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -264,11 +264,11 @@ export function SkillsCarousel({ categories }: SkillsCarouselProps) {
         <button
           onClick={toggleAutoplay}
           aria-label={isPlaying ? "Pause auto-play" : "Resume auto-play"}
-          className="group p-3 rounded-full border border-[var(--border)] bg-[var(--background)]/50 backdrop-blur-sm hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/10 transition-all duration-200"
+          className="group p-3 rounded-full border border-border bg-background/50 backdrop-blur-sm hover:border-primary/50 hover:bg-primary/10 transition-all duration-200"
         >
           {isPlaying ? (
             <svg
-              className="w-5 h-5 text-foreground/70 group-hover:text-[var(--accent)] transition-colors"
+              className="w-5 h-5 text-foreground/70 group-hover:text-primary transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -282,7 +282,7 @@ export function SkillsCarousel({ categories }: SkillsCarouselProps) {
             </svg>
           ) : (
             <svg
-              className="w-5 h-5 text-foreground/70 group-hover:text-[var(--accent)] transition-colors"
+              className="w-5 h-5 text-foreground/70 group-hover:text-primary transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

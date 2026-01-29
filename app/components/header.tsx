@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "motion/react"
 import { Menu, X } from "lucide-react"
@@ -17,36 +17,80 @@ const NAV_ITEMS = [
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("")
+  const [activeSection, setActiveSection] = useState("home")
+  const [indicator, setIndicator] = useState({ left: 0, width: 0, opacity: 0 })
+  const headerBarRef = useRef<HTMLDivElement>(null)
+  const navRefs = useRef<Record<string, HTMLAnchorElement | null>>({})
 
-  // Handle scroll for header background
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+  const setNavRef = useCallback((id: string) => (el: HTMLAnchorElement | null) => {
+    navRefs.current[id] = el
   }, [])
 
-  // Track active section
+  // Measure active element and update indicator position
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
+    const updateIndicator = () => {
+      const activeEl = navRefs.current[activeSection]
+      const bar = headerBarRef.current
+      if (!activeEl || !bar) return
+
+      const barRect = bar.getBoundingClientRect()
+      const elRect = activeEl.getBoundingClientRect()
+
+      setIndicator({
+        left: elRect.left - barRect.left,
+        width: elRect.width,
+        opacity: 1,
+      })
+    }
+
+    // Small delay to let layout settle
+    const raf = requestAnimationFrame(updateIndicator)
+    return () => cancelAnimationFrame(raf)
+  }, [activeSection])
+
+  // Also recalculate on resize
+  useEffect(() => {
+    const onResize = () => {
+      const activeEl = navRefs.current[activeSection]
+      const bar = headerBarRef.current
+      if (!activeEl || !bar) return
+      const barRect = bar.getBoundingClientRect()
+      const elRect = activeEl.getBoundingClientRect()
+      setIndicator({ left: elRect.left - barRect.left, width: elRect.width, opacity: 1 })
+    }
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
+  }, [activeSection])
+
+  // Scroll handler: header background + active section detection
+  useEffect(() => {
+    const SECTION_IDS = ["home", "skills", "education", "experience", "projects", "contact"]
+    let rafId = 0
+
+    const handleScroll = () => {
+      cancelAnimationFrame(rafId)
+      rafId = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 20)
+
+        // Scroll spy: find the last section whose top has scrolled past the threshold
+        const threshold = 150
+        let current = "home"
+        for (const id of SECTION_IDS) {
+          const el = document.getElementById(id)
+          if (el && el.getBoundingClientRect().top <= threshold) {
+            current = id
           }
-        })
-      },
-      { threshold: 0.3, rootMargin: "-80px 0px -50% 0px" }
-    )
+        }
+        setActiveSection(current)
+      })
+    }
 
-    NAV_ITEMS.forEach(({ href }) => {
-      const section = document.querySelector(href)
-      if (section) observer.observe(section)
-    })
-
-    return () => observer.disconnect()
+    handleScroll() // run once on mount
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      cancelAnimationFrame(rafId)
+    }
   }, [])
 
   return (
@@ -59,15 +103,27 @@ export default function Header() {
         }
       `}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-12 lg:px-20">
+      <div ref={headerBarRef} className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-12 lg:px-20">
+        {/* Sliding underline indicator - desktop only */}
+        <motion.div
+          className="absolute bottom-0 h-px bg-primary hidden md:block"
+          animate={{
+            left: indicator.left,
+            width: indicator.width,
+            opacity: indicator.opacity,
+          }}
+          transition={{ type: "spring", stiffness: 350, damping: 35 }}
+        />
+
         {/* Logo */}
         <Link
+          ref={setNavRef("home")}
           href="#home"
           aria-label="Go to home"
           onClick={() => setOpen(false)}
           className="group flex items-center gap-1"
         >
-          <span className="font-bebas text-2xl tracking-wide text-foreground transition-colors group-hover:text-primary">
+          <span className={`font-bebas text-2xl tracking-wide transition-colors duration-200 ${activeSection === "home" ? "text-primary" : "text-foreground group-hover:text-primary"}`}>
             VIHAAN
           </span>
           <motion.span
@@ -85,10 +141,12 @@ export default function Header() {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 md:flex">
           {NAV_ITEMS.map(({ label, href, number }) => {
-            const isActive = activeSection === href.slice(1)
+            const sectionId = href.slice(1)
+            const isActive = activeSection === sectionId
             return (
               <Link
                 key={label}
+                ref={setNavRef(sectionId)}
                 href={href}
                 className={`
                   group relative px-3 py-2 font-plex-mono text-[11px] uppercase tracking-[0.1em]
@@ -101,18 +159,9 @@ export default function Header() {
               >
                 <span className="text-text-tertiary mr-1">{number}.</span>
                 {label}
-                {/* Active indicator */}
-                {isActive && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute bottom-0 left-3 right-3 h-px bg-primary"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
               </Link>
             )
           })}
-
         </nav>
 
         {/* Right section */}

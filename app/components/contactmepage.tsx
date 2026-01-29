@@ -6,7 +6,8 @@ import Link from "next/link"
 import emailjs from "@emailjs/browser"
 import { Send, Github, Linkedin, Twitter, Mail, ArrowUpRight, CheckCircle, AlertCircle } from "lucide-react"
 import { SlideToVerify } from "./contact/slide-to-verify"
-import { GlowInput } from "./contact/glow-input"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Bio } from "@/data/constants"
 
 const SOCIAL_LINKS = [
@@ -14,6 +15,20 @@ const SOCIAL_LINKS = [
   { icon: Linkedin, href: Bio.linkedin, label: "LinkedIn" },
   { icon: Twitter, href: Bio.twitter, label: "Twitter" },
 ]
+
+function LabelBlock({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="block font-plex-mono text-xs uppercase tracking-wider text-[var(--muted-foreground)] mb-2">
+        {label}
+      </label>
+      {children}
+      {error && (
+        <p className="mt-1.5 font-plex-mono text-xs text-[var(--destructive)]">{error}</p>
+      )}
+    </div>
+  )
+}
 
 export default function ContactMePage() {
   const formRef = useRef<HTMLFormElement>(null)
@@ -71,14 +86,14 @@ export default function ContactMePage() {
 
     setStatus("sending")
 
-    // EmailJS configuration
-    const SERVICE_ID = "YOUR_SERVICE_ID"
-    const TEMPLATE_ID = "YOUR_TEMPLATE_ID"
-    const PUBLIC_KEY = "YOUR_PUBLIC_KEY"
-
     try {
       if (formRef.current) {
-        await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
+        await emailjs.sendForm(
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+          formRef.current,
+          process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        )
         setStatus("success")
         setFormData({ name: "", email: "", subject: "", message: "" })
         setIsHumanVerified(false)
@@ -152,49 +167,49 @@ export default function ContactMePage() {
             >
               {/* Name & Email Row */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <GlowInput
-                  label="Name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your name"
-                  error={errors.name}
-                  required
-                />
-                <GlowInput
-                  label="Email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="your@email.com"
-                  error={errors.email}
-                  required
-                />
+                <LabelBlock label="Name" error={errors.name}>
+                  <Input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                    required
+                  />
+                </LabelBlock>
+                <LabelBlock label="Email" error={errors.email}>
+                  <Input
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="your@email.com"
+                    required
+                  />
+                </LabelBlock>
               </div>
 
               {/* Subject */}
-              <GlowInput
-                label="Subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                placeholder="What's this about?"
-                error={errors.subject}
-                required
-              />
+              <LabelBlock label="Subject" error={errors.subject}>
+                <Input
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  placeholder="What's this about?"
+                  required
+                />
+              </LabelBlock>
 
               {/* Message */}
-              <GlowInput
-                label="Message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="Tell me about your project..."
-                error={errors.message}
-                required
-                rows={6}
-              />
+              <LabelBlock label="Message" error={errors.message}>
+                <Textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell me about your project..."
+                  required
+                  rows={6}
+                />
+              </LabelBlock>
 
               {/* Error Message */}
               {status === "error" && (

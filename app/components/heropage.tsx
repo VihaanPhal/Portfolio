@@ -44,7 +44,7 @@ const HeroPage = () => {
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-background">
       {/* Animated Noise Overlay */}
-      <NoiseCanvas opacity={0.03} />
+      <NoiseCanvas opacity={0.3} />
 
       {/* Vertical Side Label */}
       <motion.div

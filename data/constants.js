@@ -28,84 +28,259 @@ export const skills = [
   {
     title: "Frontend",
     skills: [
-      { name: "React", imageLight: "https://cdn.simpleicons.org/react/61DAFB", imageDark: "https://cdn.simpleicons.org/react/61DAFB" },
-      { name: "Next.js", imageLight: "https://cdn.simpleicons.org/nextdotjs/000000", imageDark: "https://cdn.simpleicons.org/nextdotjs/FFFFFF" },
-      { name: "Angular", imageLight: "https://cdn.simpleicons.org/angular/DD0031", imageDark: "https://cdn.simpleicons.org/angular/DD0031" },
-      { name: "Vue.js", imageLight: "https://cdn.simpleicons.org/vuedotjs/4FC08D", imageDark: "https://cdn.simpleicons.org/vuedotjs/4FC08D" },
-      { name: "Three.js", imageLight: "https://cdn.simpleicons.org/threedotjs/000000", imageDark: "https://cdn.simpleicons.org/threedotjs/FFFFFF" },
-      { name: "Tailwind CSS", imageLight: "https://cdn.simpleicons.org/tailwindcss/06B6D4", imageDark: "https://cdn.simpleicons.org/tailwindcss/06B6D4" },
-      { name: "HTML5", imageLight: "https://cdn.simpleicons.org/html5/E34F26", imageDark: "https://cdn.simpleicons.org/html5/E34F26" },
-      { name: "JavaScript", imageLight: "https://cdn.simpleicons.org/javascript/F7DF1E", imageDark: "https://cdn.simpleicons.org/javascript/F7DF1E" },
-      { name: "TypeScript", imageLight: "https://cdn.simpleicons.org/typescript/3178C6", imageDark: "https://cdn.simpleicons.org/typescript/3178C6" },
+      {
+        name: "React",
+        imageLight: "https://cdn.simpleicons.org/react/61DAFB",
+        imageDark: "https://cdn.simpleicons.org/react/61DAFB",
+      },
+      {
+        name: "Next.js",
+        imageLight: "https://cdn.simpleicons.org/nextdotjs/000000",
+        imageDark: "https://cdn.simpleicons.org/nextdotjs/FFFFFF",
+      },
+      {
+        name: "Angular",
+        imageLight: "https://cdn.simpleicons.org/angular/DD0031",
+        imageDark: "https://cdn.simpleicons.org/angular/DD0031",
+      },
+      {
+        name: "Vue.js",
+        imageLight: "https://cdn.simpleicons.org/vuedotjs/4FC08D",
+        imageDark: "https://cdn.simpleicons.org/vuedotjs/4FC08D",
+      },
+      {
+        name: "Three.js",
+        imageLight: "https://cdn.simpleicons.org/threedotjs/000000",
+        imageDark: "https://cdn.simpleicons.org/threedotjs/FFFFFF",
+      },
+      {
+        name: "Tailwind CSS",
+        imageLight: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
+        imageDark: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
+      },
+      {
+        name: "HTML5",
+        imageLight: "https://cdn.simpleicons.org/html5/E34F26",
+        imageDark: "https://cdn.simpleicons.org/html5/E34F26",
+      },
+      {
+        name: "JavaScript",
+        imageLight: "https://cdn.simpleicons.org/javascript/F7DF1E",
+        imageDark: "https://cdn.simpleicons.org/javascript/F7DF1E",
+      },
+      {
+        name: "TypeScript",
+        imageLight: "https://cdn.simpleicons.org/typescript/3178C6",
+        imageDark: "https://cdn.simpleicons.org/typescript/3178C6",
+      },
     ],
   },
   {
     title: "Backend",
     skills: [
-      { name: "Node.js", imageLight: "https://cdn.simpleicons.org/nodedotjs/339933", imageDark: "https://cdn.simpleicons.org/nodedotjs/339933" },
-      { name: "Express", imageLight: "https://cdn.simpleicons.org/express/000000", imageDark: "https://cdn.simpleicons.org/express/FFFFFF" },
-      { name: ".NET", imageLight: "https://cdn.simpleicons.org/dotnet/512BD4", imageDark: "https://cdn.simpleicons.org/dotnet/512BD4" },
-      { name: "MySQL", imageLight: "https://cdn.simpleicons.org/mysql/4479A1", imageDark: "https://cdn.simpleicons.org/mysql/4479A1" },
-      { name: "PostgreSQL", imageLight: "https://cdn.simpleicons.org/postgresql/4169E1", imageDark: "https://cdn.simpleicons.org/postgresql/4169E1" },
-      { name: "MongoDB", imageLight: "https://cdn.simpleicons.org/mongodb/47A248", imageDark: "https://cdn.simpleicons.org/mongodb/47A248" },
-      { name: "Firebase", imageLight: "https://cdn.simpleicons.org/firebase/FFCA28", imageDark: "https://cdn.simpleicons.org/firebase/FFCA28" },
-      { name: "Redis", imageLight: "https://cdn.simpleicons.org/redis/DC382D", imageDark: "https://cdn.simpleicons.org/redis/DC382D" },
-      { name: "GraphQL", imageLight: "https://cdn.simpleicons.org/graphql/E10098", imageDark: "https://cdn.simpleicons.org/graphql/E10098" },
-      { name: "FastAPI", imageLight: "https://cdn.simpleicons.org/fastapi/009688", imageDark: "https://cdn.simpleicons.org/fastapi/009688" },
-      { name: "Flask", imageLight: "https://cdn.simpleicons.org/flask/000000", imageDark: "https://cdn.simpleicons.org/flask/FFFFFF" },
-      { name: "Celery", imageLight: "https://cdn.simpleicons.org/celery/37814A", imageDark: "https://cdn.simpleicons.org/celery/37814A" },
-      { name: "Neon", imageLight: "https://cdn.simpleicons.org/neon/00E599", imageDark: "https://cdn.simpleicons.org/neon/00E599" },
+      {
+        name: "Node.js",
+        imageLight: "https://cdn.simpleicons.org/nodedotjs/339933",
+        imageDark: "https://cdn.simpleicons.org/nodedotjs/339933",
+      },
+      {
+        name: "Express",
+        imageLight: "https://cdn.simpleicons.org/express/000000",
+        imageDark: "https://cdn.simpleicons.org/express/FFFFFF",
+      },
+      {
+        name: ".NET",
+        imageLight: "https://cdn.simpleicons.org/dotnet/512BD4",
+        imageDark: "https://cdn.simpleicons.org/dotnet/512BD4",
+      },
+      {
+        name: "MySQL",
+        imageLight: "https://cdn.simpleicons.org/mysql/4479A1",
+        imageDark: "https://cdn.simpleicons.org/mysql/4479A1",
+      },
+      {
+        name: "PostgreSQL",
+        imageLight: "https://cdn.simpleicons.org/postgresql/4169E1",
+        imageDark: "https://cdn.simpleicons.org/postgresql/4169E1",
+      },
+      {
+        name: "MongoDB",
+        imageLight: "https://cdn.simpleicons.org/mongodb/47A248",
+        imageDark: "https://cdn.simpleicons.org/mongodb/47A248",
+      },
+      {
+        name: "Firebase",
+        imageLight: "https://cdn.simpleicons.org/firebase/FFCA28",
+        imageDark: "https://cdn.simpleicons.org/firebase/FFCA28",
+      },
+      {
+        name: "Redis",
+        imageLight: "https://cdn.simpleicons.org/redis/DC382D",
+        imageDark: "https://cdn.simpleicons.org/redis/DC382D",
+      },
+      {
+        name: "GraphQL",
+        imageLight: "https://cdn.simpleicons.org/graphql/E10098",
+        imageDark: "https://cdn.simpleicons.org/graphql/E10098",
+      },
+      {
+        name: "FastAPI",
+        imageLight: "https://cdn.simpleicons.org/fastapi/009688",
+        imageDark: "https://cdn.simpleicons.org/fastapi/009688",
+      },
+      {
+        name: "Flask",
+        imageLight: "https://cdn.simpleicons.org/flask/000000",
+        imageDark: "https://cdn.simpleicons.org/flask/FFFFFF",
+      },
+      {
+        name: "Celery",
+        imageLight: "https://cdn.simpleicons.org/celery/37814A",
+        imageDark: "https://cdn.simpleicons.org/celery/37814A",
+      },
+      {
+        name: "Neon",
+        imageLight: "https://cdn.simpleicons.org/neon/00E599",
+        imageDark: "https://cdn.simpleicons.org/neon/00E599",
+      },
     ],
   },
   {
     title: "Programming Languages",
     skills: [
-      { name: "Python", imageLight: "https://cdn.simpleicons.org/python/3776AB", imageDark: "https://cdn.simpleicons.org/python/3776AB" },
-      { name: "Java", imageLight: "https://cdn.simpleicons.org/openjdk/000000", imageDark: "https://cdn.simpleicons.org/openjdk/FFFFFF" },
-      { name: "C#", imageLight: "https://cdn.simpleicons.org/csharp/239120", imageDark: "https://cdn.simpleicons.org/csharp/239120" },
-      { name: "C/C++", imageLight: "https://cdn.simpleicons.org/cplusplus/00599C", imageDark: "https://cdn.simpleicons.org/cplusplus/00599C" },
-      { name: "Swift", imageLight: "https://cdn.simpleicons.org/swift/F05138", imageDark: "https://cdn.simpleicons.org/swift/F05138" },
-      { name: "Go", imageLight: "https://cdn.simpleicons.org/go/00ADD8", imageDark: "https://cdn.simpleicons.org/go/00ADD8" },
+      {
+        name: "Python",
+        imageLight: "https://cdn.simpleicons.org/python/3776AB",
+        imageDark: "https://cdn.simpleicons.org/python/3776AB",
+      },
+      {
+        name: "Java",
+        imageLight: "https://cdn.simpleicons.org/openjdk/000000",
+        imageDark: "https://cdn.simpleicons.org/openjdk/FFFFFF",
+      },
+      {
+        name: "C#",
+        imageLight: "https://cdn.simpleicons.org/csharp/239120",
+        imageDark: "https://cdn.simpleicons.org/csharp/239120",
+      },
+      {
+        name: "C/C++",
+        imageLight: "https://cdn.simpleicons.org/cplusplus/00599C",
+        imageDark: "https://cdn.simpleicons.org/cplusplus/00599C",
+      },
+      {
+        name: "Swift",
+        imageLight: "https://cdn.simpleicons.org/swift/F05138",
+        imageDark: "https://cdn.simpleicons.org/swift/F05138",
+      },
+      {
+        name: "Go",
+        imageLight: "https://cdn.simpleicons.org/go/00ADD8",
+        imageDark: "https://cdn.simpleicons.org/go/00ADD8",
+      },
     ],
   },
   {
     title: "Mobile & Cloud",
     skills: [
-      { name: "React Native", imageLight: "https://cdn.simpleicons.org/react/61DAFB", imageDark: "https://cdn.simpleicons.org/react/61DAFB" },
-      { name: "iOS", imageLight: "https://cdn.simpleicons.org/apple/000000", imageDark: "https://cdn.simpleicons.org/apple/FFFFFF" },
-      { name: "Docker", imageLight: "https://cdn.simpleicons.org/docker/2496ED", imageDark: "https://cdn.simpleicons.org/docker/2496ED" },
-      { name: "Kubernetes", imageLight: "https://cdn.simpleicons.org/kubernetes/326CE5", imageDark: "https://cdn.simpleicons.org/kubernetes/326CE5" },
-      { name: "Azure", imageLight: "https://cdn.simpleicons.org/microsoftazure/0078D4", imageDark: "https://cdn.simpleicons.org/microsoftazure/0078D4" },
+      {
+        name: "React Native",
+        imageLight: "https://cdn.simpleicons.org/react/61DAFB",
+        imageDark: "https://cdn.simpleicons.org/react/61DAFB",
+      },
+      {
+        name: "iOS",
+        imageLight: "https://cdn.simpleicons.org/apple/000000",
+        imageDark: "https://cdn.simpleicons.org/apple/FFFFFF",
+      },
+      {
+        name: "Docker",
+        imageLight: "https://cdn.simpleicons.org/docker/2496ED",
+        imageDark: "https://cdn.simpleicons.org/docker/2496ED",
+      },
+      {
+        name: "Kubernetes",
+        imageLight: "https://cdn.simpleicons.org/kubernetes/326CE5",
+        imageDark: "https://cdn.simpleicons.org/kubernetes/326CE5",
+      },
+      {
+        name: "Azure",
+        imageLight: "https://cdn.simpleicons.org/microsoftazure/0078D4",
+        imageDark: "https://cdn.simpleicons.org/microsoftazure/0078D4",
+      },
     ],
   },
   {
     title: "Tools & Others",
     skills: [
-      { name: "Git", imageLight: "https://cdn.simpleicons.org/git/F05032", imageDark: "https://cdn.simpleicons.org/git/F05032" },
-      { name: "GitHub", imageLight: "https://cdn.simpleicons.org/github/181717", imageDark: "https://cdn.simpleicons.org/github/FFFFFF" },
-      { name: "Postman", imageLight: "https://cdn.simpleicons.org/postman/FF6C37", imageDark: "https://cdn.simpleicons.org/postman/FF6C37" },
-      { name: "Figma", imageLight: "https://cdn.simpleicons.org/figma/F24E1E", imageDark: "https://cdn.simpleicons.org/figma/F24E1E" },
-      { name: "Jira", imageLight: "https://cdn.simpleicons.org/jira/0052CC", imageDark: "https://cdn.simpleicons.org/jira/0052CC" },
-      { name: "Webpack", imageLight: "https://cdn.simpleicons.org/webpack/8DD6F9", imageDark: "https://cdn.simpleicons.org/webpack/8DD6F9" },
-      { name: "Vite", imageLight: "https://cdn.simpleicons.org/vite/646CFF", imageDark: "https://cdn.simpleicons.org/vite/646CFF" },
-      { name: "Grafana", imageLight: "https://cdn.simpleicons.org/grafana/F46800", imageDark: "https://cdn.simpleicons.org/grafana/F46800" },
-      { name: "Prometheus", imageLight: "https://cdn.simpleicons.org/prometheus/E6522C", imageDark: "https://cdn.simpleicons.org/prometheus/E6522C" },
-      { name: "PostHog", imageLight: "https://cdn.simpleicons.org/posthog/000000", imageDark: "https://cdn.simpleicons.org/posthog/FFFFFF" },
-      { name: "Jenkins", imageLight: "https://cdn.simpleicons.org/jenkins/D24939", imageDark: "https://cdn.simpleicons.org/jenkins/D24939" },
+      {
+        name: "Git",
+        imageLight: "https://cdn.simpleicons.org/git/F05032",
+        imageDark: "https://cdn.simpleicons.org/git/F05032",
+      },
+      {
+        name: "GitHub",
+        imageLight: "https://cdn.simpleicons.org/github/181717",
+        imageDark: "https://cdn.simpleicons.org/github/FFFFFF",
+      },
+      {
+        name: "Postman",
+        imageLight: "https://cdn.simpleicons.org/postman/FF6C37",
+        imageDark: "https://cdn.simpleicons.org/postman/FF6C37",
+      },
+      {
+        name: "Figma",
+        imageLight: "https://cdn.simpleicons.org/figma/F24E1E",
+        imageDark: "https://cdn.simpleicons.org/figma/F24E1E",
+      },
+      {
+        name: "Jira",
+        imageLight: "https://cdn.simpleicons.org/jira/0052CC",
+        imageDark: "https://cdn.simpleicons.org/jira/0052CC",
+      },
+      {
+        name: "Webpack",
+        imageLight: "https://cdn.simpleicons.org/webpack/8DD6F9",
+        imageDark: "https://cdn.simpleicons.org/webpack/8DD6F9",
+      },
+      {
+        name: "Vite",
+        imageLight: "https://cdn.simpleicons.org/vite/646CFF",
+        imageDark: "https://cdn.simpleicons.org/vite/646CFF",
+      },
+      {
+        name: "Grafana",
+        imageLight: "https://cdn.simpleicons.org/grafana/F46800",
+        imageDark: "https://cdn.simpleicons.org/grafana/F46800",
+      },
+      {
+        name: "Prometheus",
+        imageLight: "https://cdn.simpleicons.org/prometheus/E6522C",
+        imageDark: "https://cdn.simpleicons.org/prometheus/E6522C",
+      },
+      {
+        name: "PostHog",
+        imageLight: "https://cdn.simpleicons.org/posthog/000000",
+        imageDark: "https://cdn.simpleicons.org/posthog/FFFFFF",
+      },
+      {
+        name: "Jenkins",
+        imageLight: "https://cdn.simpleicons.org/jenkins/D24939",
+        imageDark: "https://cdn.simpleicons.org/jenkins/D24939",
+      },
     ],
   },
 ];
-
 
 export const experiences = [
   {
     id: 0,
     img: "https://cdn.prod.website-files.com/692f293f1ff95ce3dacd4003/692f38006ca97f5551f4fa7a_midpoint.png",
     logoWide: true,
-    role: "Backend Software Engineering Intern",
+    role: "oftware Engineering Intern",
     company: "Midpoint",
     date: "June 2025 – Present",
-    desc: "Designing and implementing scalable backend systems using FastAPI and Celery for a high-growth AI startup. Building event-driven architectures and microservices to support real-time AI-powered features. Implementing comprehensive monitoring solutions with Grafana, Prometheus, and Posthog for system observability and user analytics.",
+    desc: "Designing and implementing scalable systems using FastAPI and Celery for a high-growth AI startup. Building event-driven architectures and microservices to support real-time AI-powered features. Implementing comprehensive monitoring solutions with Grafana, Prometheus, and Posthog for system observability and user analytics.",
     skills: [
       "FastAPI",
       "Celery",
@@ -208,7 +383,7 @@ export const education = [
     school: "Arizona State University, Tempe",
     date: "Aug 2021 - May 2026",
     grade: "3.86 GPA",
-    desc: "I am currently pursuing a B.S. + M.S. in Computer Science through ASU's 4+1 Accelerated Program, with a minor in Business. I have been on the Dean's List from Fall 2021 to Fall 2023. I have taken courses in Data Structures, Algorithms, Object-Oriented Programming, Database Management Systems, Operating Systems, and Computer Networks, among others.",
+    desc: "I am currently pursuing a B.S. + M.S. in Computer Science through ASU's 4+1 Accelerated Program, with a minor in Business. I have been on the Dean's List of meritorious students from Fall 2021 to Fall 2025, and I have received a $15,000 scholarship each year. I have taken courses in Data Structures, Algorithms, Object-Oriented Programming, Database Management Systems, Operating Systems, and Computer Networks, among others.",
     degree: "B.S. + M.S. Computer Science (4+1 Accelerated Program)",
   },
   {
@@ -217,7 +392,7 @@ export const education = [
     school: "Vidya Valley North Point, Pune",
     date: "July 2019 - Apr 2021",
     grade: "92.8%",
-    desc: "I completed my class 12 high school education at Vidya Valley North Point , where I studied Science with Computer Science.",
+    desc: "I completed my class 12 high school education at Vidya Valley North Point , where I took Science as my core with specialization in Computer Science.",
     degree: "SSC(XII), Science with Computer",
   },
   {

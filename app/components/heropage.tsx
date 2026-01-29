@@ -46,27 +46,6 @@ const HeroPage = () => {
       {/* Animated Noise Overlay */}
       <NoiseCanvas opacity={0.03} />
 
-      {/* Portfolio Version Tag - Top Right */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-        className="absolute top-6 right-6 md:top-10 md:right-10 z-20"
-      >
-        <div className="flex flex-col items-end gap-1">
-          <span className="font-plex-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            Portfolio
-          </span>
-          <span className="font-bebas text-lg md:text-xl text-foreground tracking-wide">
-            V.02
-          </span>
-          <div className="w-8 h-px bg-primary mt-1" />
-          <span className="font-plex-mono text-[9px] uppercase tracking-[0.2em] text-text-tertiary mt-1">
-            2024
-          </span>
-        </div>
-      </motion.div>
-
       {/* Vertical Side Label */}
       <motion.div
         initial={{ opacity: 0 }}

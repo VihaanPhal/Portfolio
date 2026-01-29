@@ -6,6 +6,7 @@ import Link from "next/link"
 import emailjs from "@emailjs/browser"
 import { Send, Github, Linkedin, Twitter, Mail, ArrowUpRight, CheckCircle, AlertCircle } from "lucide-react"
 import { SlideToVerify } from "./contact/slide-to-verify"
+import { GlowInput } from "./contact/glow-input"
 import { Bio } from "@/data/constants"
 
 const SOCIAL_LINKS = [

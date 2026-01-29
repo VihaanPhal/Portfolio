@@ -113,19 +113,20 @@ export default function Header() {
             )
           })}
 
+        </nav>
+
+        {/* Right section */}
+        <div className="flex items-center gap-4">
           {/* Resume link */}
           <Link
             href="https://drive.google.com/file/d/1vPtMYtODx6FQC0M7AcMPR2UDPvaubnIv/view?usp=sharing"
             target="_blank"
             rel="noreferrer"
-            className="ml-2 px-3 py-1.5 border border-primary font-plex-mono text-[10px] uppercase tracking-[0.15em] text-primary hover:bg-primary/10 transition-colors rounded-[var(--radius)]"
+            className="hidden md:inline-flex px-3 py-1.5 border border-primary font-plex-mono text-[10px] uppercase tracking-[0.15em] text-primary hover:bg-primary/10 transition-colors rounded-[var(--radius)]"
           >
             Resume
           </Link>
-        </nav>
 
-        {/* Right section */}
-        <div className="flex items-center gap-3">
           {/* Theme toggle */}
           <AnimatedThemeToggler className="size-8" />
 

@@ -5,6 +5,7 @@ import { motion } from "motion/react"
 import Link from "next/link"
 import emailjs from "@emailjs/browser"
 import { Send, Github, Linkedin, Twitter, Mail, ArrowUpRight, CheckCircle, AlertCircle } from "lucide-react"
+import { SlideToVerify } from "./contact/slide-to-verify"
 import { Bio } from "@/data/constants"
 
 const SOCIAL_LINKS = [
@@ -23,6 +24,7 @@ export default function ContactMePage() {
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle")
+  const [isHumanVerified, setIsHumanVerified] = useState(false)
 
   // Form validation
   const validateForm = useCallback(() => {
@@ -78,6 +80,7 @@ export default function ContactMePage() {
         await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
         setStatus("success")
         setFormData({ name: "", email: "", subject: "", message: "" })
+        setIsHumanVerified(false)
       }
     } catch (error) {
       setStatus("error")
@@ -85,7 +88,7 @@ export default function ContactMePage() {
     }
   }
 
-  const isFormValid = formData.name && formData.email && formData.subject && formData.message.length >= 10
+  const isFormValid = formData.name && formData.email && formData.subject && formData.message.length >= 10 && isHumanVerified
 
   return (
     <section
@@ -264,6 +267,12 @@ export default function ContactMePage() {
                   </span>
                 </motion.div>
               )}
+
+              {/* Slide to Verify */}
+              <SlideToVerify
+                onVerified={() => setIsHumanVerified(true)}
+                isVerified={isHumanVerified}
+              />
 
               {/* Submit Button */}
               <motion.button

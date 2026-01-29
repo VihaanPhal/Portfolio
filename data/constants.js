@@ -100,7 +100,8 @@ export const skills = [
 export const experiences = [
   {
     id: 0,
-    img: "https://media.licdn.com/dms/image/v2/D560BAQFGWPOmM1IDMA/company-logo_200_200/company-logo_200_200/0/1710523977971/midpointai_logo?e=2147483647&v=beta&t=8K2J6a6eZIqKQMT0K8_8YYvX5FaBbJfSMl9xY_Rh2Ks",
+    img: "https://cdn.prod.website-files.com/692f293f1ff95ce3dacd4003/692f38006ca97f5551f4fa7a_midpoint.png",
+    logoWide: true,
     role: "Backend Software Engineering Intern",
     company: "Midpoint",
     date: "June 2025 – Present",
@@ -118,7 +119,8 @@ export const experiences = [
   },
   {
     id: 1,
-    img: "https://media.licdn.com/dms/image/v2/D560BAQGVBGgJXfE7ew/company-logo_200_200/company-logo_200_200/0/1702424166915/nabsol_llc_logo?e=2147483647&v=beta&t=NAB_logo",
+    img: "https://nabsolutions.ca/wp-content/uploads/2024/06/nabsolutions-logo.png.webp",
+    logoWide: true,
     role: "Full Stack Developer Intern",
     company: "NAB Solutions",
     date: "November 2024 – Present",
@@ -134,8 +136,8 @@ export const experiences = [
   },
   {
     id: 2,
-    img: "https://media.licdn.com/dms/image/v2/D4E0BAQHJgjkrBLANsQ/company-logo_200_200/company-logo_200_200/0/1693282188977?e=2147483647&v=beta&t=ConvoCoach_logo",
-    role: "Software Developer",
+    img: "/assets/ConvoCoachLogo.png",
+    role: "Co-Founder",
     company: "ConvoCoach",
     date: "August 2024 – November 2024",
     desc: "Built AI-powered conversation coaching platform using modern web technologies. Implemented real-time audio processing and speech analysis features. Developed intuitive user interfaces for interview practice and feedback visualization.",

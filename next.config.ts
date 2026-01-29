@@ -77,6 +77,15 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'media.licdn.com',
       },
+      // Company websites
+      {
+        protocol: 'https',
+        hostname: 'cdn.prod.website-files.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'nabsolutions.ca',
+      },
       // CDNs
       {
         protocol: 'https',

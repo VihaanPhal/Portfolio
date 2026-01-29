@@ -14,6 +14,7 @@ interface MissionCardProps {
   date: string
   description: string
   logo: string
+  logoWide?: boolean
   skills: string[]
   documentUrl?: string
   index: number
@@ -26,6 +27,7 @@ export const MissionCard: React.FC<MissionCardProps> = ({
   date,
   description,
   logo,
+  logoWide = false,
   skills,
   documentUrl,
   index,
@@ -132,7 +134,9 @@ export const MissionCard: React.FC<MissionCardProps> = ({
             <div className="flex items-start gap-4">
               {/* Company Logo */}
               <motion.div
-                className="relative w-12 h-12 md:w-14 md:h-14 rounded-sm overflow-hidden bg-card border border-border flex-shrink-0"
+                className={`relative rounded-sm overflow-hidden bg-card border border-border flex-shrink-0 ${
+                  logoWide ? "w-24 h-12 md:w-28 md:h-14" : "w-12 h-12 md:w-14 md:h-14"
+                }`}
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 viewport={{ once: true }}
@@ -142,7 +146,7 @@ export const MissionCard: React.FC<MissionCardProps> = ({
                   src={logo}
                   alt={company}
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   loading="lazy"
                 />
               </motion.div>

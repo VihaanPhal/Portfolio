@@ -43,6 +43,11 @@ const SquigglyArrow = () => (
 
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState<ProjectCategory>("all")
+  const [expandedProjectId, setExpandedProjectId] = useState<number | null>(null)
+
+  const handleToggleExpand = (id: number) => {
+    setExpandedProjectId((prev) => (prev === id ? null : id))
+  }
 
   // Get categories and counts
   const categories = useMemo(
@@ -207,6 +212,8 @@ export default function ProjectsPage() {
                             github={project.github}
                             webapp={project.webapp}
                             index={index + 1}
+                            isExpanded={expandedProjectId === project.id}
+                            onToggleExpand={() => handleToggleExpand(project.id)}
                           />
                         ))}
                       </div>
@@ -227,6 +234,8 @@ export default function ProjectsPage() {
                             github={project.github}
                             webapp={project.webapp}
                             index={index + 3}
+                            isExpanded={expandedProjectId === project.id}
+                            onToggleExpand={() => handleToggleExpand(project.id)}
                           />
                         ))}
                       </div>

@@ -15,6 +15,8 @@ interface ProjectCardProps {
   github?: string
   webapp?: string
   index: number
+  isExpanded?: boolean
+  onToggleExpand?: () => void
 }
 
 const categoryColors: Record<string, string> = {
@@ -34,6 +36,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
   github,
   webapp,
   index,
+  isExpanded = false,
+  onToggleExpand,
 }) => {
   const [isHovered, setIsHovered] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 })
@@ -158,9 +162,29 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           </h3>
 
           {/* Description */}
-          <p className="font-plex-mono text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-4">
-            {description}
-          </p>
+          <div className="mb-4">
+            <motion.div
+              initial={false}
+              animate={{ height: isExpanded ? "auto" : "2.5rem" }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <p className="font-plex-mono text-xs text-muted-foreground leading-relaxed">
+                {description}
+              </p>
+            </motion.div>
+            {description.length > 100 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onToggleExpand?.()
+                }}
+                className="font-plex-mono text-[10px] text-primary hover:text-primary/80 uppercase tracking-wider mt-1 transition-colors duration-200"
+              >
+                {isExpanded ? "Read less" : "Read more"}
+              </button>
+            )}
+          </div>
 
           {/* Tech stack - compact */}
           <TechTerminal technologies={tags} compact className="mb-4" />

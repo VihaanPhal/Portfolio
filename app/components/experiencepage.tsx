@@ -158,6 +158,7 @@ export default function ExperiencePage() {
                   date={exp.date}
                   description={exp.desc}
                   logo={exp.img}
+                  logoWide={exp.logoWide}
                   skills={exp.skills || []}
                   documentUrl={exp.doc}
                   index={index}

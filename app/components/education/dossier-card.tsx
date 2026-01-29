@@ -5,7 +5,6 @@ import { motion } from "motion/react"
 import Image from "next/image"
 import { SplitFlapStats } from "./split-flap-stats"
 import { AcademicStamp } from "./academic-stamp"
-import { RedactedText } from "./redacted-text"
 
 interface DossierCardProps {
   school: string
@@ -149,11 +148,9 @@ export const DossierCard: React.FC<DossierCardProps> = ({
           <span className="font-plex-mono text-[10px] uppercase tracking-[0.2em] text-text-tertiary mb-2 block">
             Academic Record
           </span>
-          <RedactedText
-            text={description}
-            revealDelay={100}
-            charRevealSpeed={12}
-          />
+          <p className="font-plex-mono text-sm text-muted-foreground leading-relaxed">
+            {description}
+          </p>
         </div>
 
         {/* Achievement Tags */}

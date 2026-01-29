@@ -297,7 +297,7 @@ html.dark {
     --shadow-xl: none;
     --shadow-2xl: none;
   }
-
+ 
 /* Marquee Animations */
 @keyframes marquee {
   from {

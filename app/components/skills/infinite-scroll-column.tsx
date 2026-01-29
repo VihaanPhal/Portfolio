@@ -2,7 +2,6 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import Image from "next/image";
 
 interface Skill {
   name: string;
@@ -59,21 +58,19 @@ export function InfiniteScrollColumn({
           >
             {/* Skill Icon */}
             <div className="relative w-12 h-12 flex items-center justify-center">
-              <Image
+              <img
                 src={skill.imageLight ?? skill.image}
                 alt={skill.name}
                 width={48}
                 height={48}
                 className="object-contain dark:hidden"
-                unoptimized
               />
-              <Image
+              <img
                 src={skill.imageDark ?? skill.imageLight ?? skill.image}
                 alt={skill.name}
                 width={48}
                 height={48}
                 className="hidden object-contain dark:block"
-                unoptimized
               />
             </div>
 

@@ -3,7 +3,6 @@
 import React, { useMemo, useState, useEffect } from "react"
 import { motion } from "motion/react"
 import { useTheme } from "next-themes"
-import Image from "next/image"
 import { skills } from "@/data/constants"
 
 // Hand-drawn squiggly arrow SVG (reused from hero)
@@ -167,7 +166,7 @@ export default function SkillsPage() {
                            transition-all duration-300 cursor-default"
               >
                 <div className="relative w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 group-hover:scale-110">
-                  <Image
+                  <img
                     src={
                       mounted
                         ? resolvedTheme === "dark"

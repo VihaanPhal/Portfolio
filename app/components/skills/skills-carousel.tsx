@@ -3,7 +3,6 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import Image from "next/image";
 import { motion } from "motion/react";
 
 interface Skill {
@@ -141,14 +140,14 @@ export function SkillsCarousel({ categories }: SkillsCarouselProps) {
                     <div className="flex flex-col items-center justify-center gap-3 p-6 rounded-2xl border border-border/70 bg-card/50 backdrop-blur-sm hover:border-primary/50 hover:bg-card hover:shadow-lg hover:shadow-primary/10 transition-all duration-300">
                       {/* Skill Icon */}
                       <div className="relative w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
-                        <Image
+                        <img
                           src={skill.imageLight ?? skill.image}
                           alt={skill.name}
                           width={56}
                           height={56}
                           className="object-contain transition-transform duration-300 group-hover:scale-110 dark:hidden"
                         />
-                        <Image
+                        <img
                           src={skill.imageDark ?? skill.imageLight ?? skill.image}
                           alt={skill.name}
                           width={56}

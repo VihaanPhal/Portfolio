@@ -152,108 +152,49 @@ export default function ContactMePage() {
             >
               {/* Name & Email Row */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block font-plex-mono text-xs uppercase tracking-wider text-[var(--foreground)]/50 mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your name"
-                    className={`
-                      w-full px-4 py-3 rounded-lg
-                      bg-[var(--card)] border text-[var(--foreground)]
-                      placeholder:text-[var(--foreground)]/30
-                      focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50
-                      transition-all duration-200
-                      ${errors.name ? "border-red-500" : "border-[var(--border)]"}
-                    `}
-                  />
-                  {errors.name && (
-                    <p className="mt-1 text-xs text-red-500">{errors.name}</p>
-                  )}
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block font-plex-mono text-xs uppercase tracking-wider text-[var(--foreground)]/50 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="your@email.com"
-                    className={`
-                      w-full px-4 py-3 rounded-lg
-                      bg-[var(--card)] border text-[var(--foreground)]
-                      placeholder:text-[var(--foreground)]/30
-                      focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50
-                      transition-all duration-200
-                      ${errors.email ? "border-red-500" : "border-[var(--border)]"}
-                    `}
-                  />
-                  {errors.email && (
-                    <p className="mt-1 text-xs text-red-500">{errors.email}</p>
-                  )}
-                </div>
+                <GlowInput
+                  label="Name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your name"
+                  error={errors.name}
+                  required
+                />
+                <GlowInput
+                  label="Email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="your@email.com"
+                  error={errors.email}
+                  required
+                />
               </div>
 
               {/* Subject */}
-              <div>
-                <label htmlFor="subject" className="block font-plex-mono text-xs uppercase tracking-wider text-[var(--foreground)]/50 mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  placeholder="What's this about?"
-                  className={`
-                    w-full px-4 py-3 rounded-lg
-                    bg-[var(--card)] border text-[var(--foreground)]
-                    placeholder:text-[var(--foreground)]/30
-                    focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50
-                    transition-all duration-200
-                    ${errors.subject ? "border-red-500" : "border-[var(--border)]"}
-                  `}
-                />
-                {errors.subject && (
-                  <p className="mt-1 text-xs text-red-500">{errors.subject}</p>
-                )}
-              </div>
+              <GlowInput
+                label="Subject"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                placeholder="What's this about?"
+                error={errors.subject}
+                required
+              />
 
               {/* Message */}
-              <div>
-                <label htmlFor="message" className="block font-plex-mono text-xs uppercase tracking-wider text-[var(--foreground)]/50 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Tell me about your project..."
-                  rows={6}
-                  className={`
-                    w-full px-4 py-3 rounded-lg resize-none
-                    bg-[var(--card)] border text-[var(--foreground)]
-                    placeholder:text-[var(--foreground)]/30
-                    focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50
-                    transition-all duration-200
-                    ${errors.message ? "border-red-500" : "border-[var(--border)]"}
-                  `}
-                />
-                {errors.message && (
-                  <p className="mt-1 text-xs text-red-500">{errors.message}</p>
-                )}
-              </div>
+              <GlowInput
+                label="Message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Tell me about your project..."
+                error={errors.message}
+                required
+                rows={6}
+              />
 
               {/* Error Message */}
               {status === "error" && (

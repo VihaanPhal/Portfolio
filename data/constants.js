@@ -277,7 +277,7 @@ export const experiences = [
     id: 0,
     img: "https://cdn.prod.website-files.com/692f293f1ff95ce3dacd4003/692f38006ca97f5551f4fa7a_midpoint.png",
     logoWide: true,
-    role: "oftware Engineering Intern",
+    role: "Software Engineering Intern",
     company: "Midpoint",
     date: "June 2025 – Present",
     desc: "Designing and implementing scalable systems using FastAPI and Celery for a high-growth AI startup. Building event-driven architectures and microservices to support real-time AI-powered features. Implementing comprehensive monitoring solutions with Grafana, Prometheus, and Posthog for system observability and user analytics.",
